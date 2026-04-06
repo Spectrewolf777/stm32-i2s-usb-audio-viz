@@ -1,0 +1,13 @@
+../Core/Src/main.c:54:5:__io_putchar	1
+../Core/Src/main.c:66:6:USB_CDC_RxHandler	1
+../Core/Src/main.c:73:6:FirstHalfProcessAudio	4
+../Core/Src/main.c:94:6:SecondHalfProcessAudio	4
+../Core/Src/main.c:121:6:DAC3100_SetPage	2
+../Core/Src/main.c:136:6:DAC3100_WriteRegister	1
+../Core/Src/main.c:142:6:DAC3100_Init	1
+../Core/Src/main.c:231:5:main	3
+../Core/Src/main.c:341:6:SystemClock_Config	4
+../Core/Src/main.c:397:6:HAL_I2S_RxHalfCpltCallback	2
+../Core/Src/main.c:410:6:HAL_I2S_RxCpltCallback	2
+../Core/Src/main.c:422:6:MPU_Config	1
+../Core/Src/main.c:453:6:Error_Handler	1

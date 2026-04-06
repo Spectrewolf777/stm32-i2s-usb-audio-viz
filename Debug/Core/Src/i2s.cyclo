@@ -1,0 +1,4 @@
+../Core/Src/i2s.c:33:6:MX_I2S1_Init	2
+../Core/Src/i2s.c:64:6:MX_I2S2_Init	2
+../Core/Src/i2s.c:95:6:HAL_I2S_MspInit	7
+../Core/Src/i2s.c:219:6:HAL_I2S_MspDeInit	3
