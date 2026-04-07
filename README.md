@@ -2,10 +2,10 @@
 ## Work in progress
 A real-time audio processing pipeline using the **STM32H743VIT6**. This project captures audio via an I2S microphone, streams it to a Python interface for real-time graphing, and saves the output as a `.wav` file. This repository is designed as a playground to **test, learn, and visualize Digital Signal Processing (DSP)** in real-time.
 
-## 🛠 Equipment
-* **Microcontroller:** STM32H743VIT6
+## 🛠 My Equipment
+* **Microcontroller:** STM32H743VIT6 (you can modify code to run on other STM32s)
 * **Converter:** ADAU7002 (PDM to I2S)
-* **Microphone:** PDM Microphone
+* **Microphone:** PDM Microphone(MD-HRA371-H10-4N)
 
 > [!TIP]
 > **Hardware Note:** You can simplify this setup by using a native **I2S Microphone** (like the SPH0645) to completely skip the ADAU7002 and PDM microphone.
@@ -22,16 +22,12 @@ A real-time audio processing pipeline using the **STM32H743VIT6**. This project 
 
 ---
 ## 🐧 Linux Permissions
-On Linux, you may encounter a `Permission Denied` error when trying to access the USB-C port. You have two ways to fix this:
+On Linux, you may encounter a `Permission Denied` error when trying to access the USB-C port. 
 
-### Option 1: The Quick Fix (Temporary)
+### The Quick Fix (Temporary)
 Run this command every time you plug in your STM32:
 ```bash
 sudo chmod 666 /dev/ttyACM0
-```
-### Option 2: The Permanent Solution
-```bash
-sudo usermod -a -G dialout $USER
 ```
 ## 🐍 Python Script Features
 repository includes `TestStm32.py`, which handles the heavy lifting on the PC side:
@@ -50,16 +46,16 @@ pip install numpy pyqtgraph pyserial PyQt5
    ```bash
    python TestStm32.py
    ```
-## What happens??
-The script will record for exactly 10 seconds. Once the timer hits the limit, it will stop the stream, automatically process the data, and output two files directly into your project directory:
+## Example python script with stm32 connect throough usb c
+<img width="2400" height="3600" alt="wav_analysis_raw" src="https://github.com/user-attachments/assets/7542c6d6-4545-4697-b0a5-7ad859e1d01d" />
 
-🖼️ final_waveform.png - A high-resolution image export of your recorded waveform.
+<img width="2400" height="3600" alt="wav_analysis_bandpass" src="https://github.com/user-attachments/assets/ca43c15e-fdda-4db2-882f-64b942b36a41" />
 
-🎵 audio_capture.wav - The amplified (20x) recorded audio file, mapped to the correct dynamic sample rate.
-##Example<img width="1200" height="891" alt="final_waveform" src="https://github.com/user-attachments/assets/06151c89-9002-4617-8a9e-a8e0213f3573" />
-<img width="332" height="120" alt="image" src="https://github.com/user-attachments/assets/4b64fda2-c4c3-48fb-a04e-2042a60e8eee" />
+<img width="567" height="246" alt="image" src="https://github.com/user-attachments/assets/14ddd603-ab1a-40d0-8add-6a3d282dea74" />
 
-You will be able to see your dsp through usb c using python.
+bandpass filter because of range of pdm microphone, we know everything else is actualy noise.
+
+You can use this to test DSP and see results using usb c.
 
 
    
