@@ -46,10 +46,14 @@ pip install numpy pyqtgraph pyserial PyQt5
    ```bash
    python TestStm32.py
    ```
-## Example python script with stm32 connect throough usb c
+# Example
+## Audio from stm32 i2s sample recieved through usb
 <img width="2400" height="3600" alt="wav_analysis_raw" src="https://github.com/user-attachments/assets/7542c6d6-4545-4697-b0a5-7ad859e1d01d" />
 
+## Bandpass filter applied to it 
 <img width="2400" height="3600" alt="wav_analysis_bandpass" src="https://github.com/user-attachments/assets/ca43c15e-fdda-4db2-882f-64b942b36a41" />
+
+## Python script creates what circled below
 
 <img width="567" height="246" alt="image" src="https://github.com/user-attachments/assets/14ddd603-ab1a-40d0-8add-6a3d282dea74" />
 
