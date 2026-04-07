@@ -3,7 +3,7 @@
 A real-time audio processing pipeline using the **STM32H743VIT6**. This project captures audio via an I2S microphone, streams it to a Python interface for real-time graphing, and saves the output as a `.wav` file. This repository is designed as a playground to **test, learn, and visualize Digital Signal Processing (DSP)** in real-time.
 
 ## 🛠 My Equipment
-* **Microcontroller:** STM32H743VIT6 (you can modify code to run on other STM32s)
+* **Microcontroller:** STM32H743VIT6 (WeAct Studio on Aliexpress sells them for cheap that what i am using) (you can modify code to run on other STM32s)
 * **Converter:** ADAU7002 (PDM to I2S)
 * **Microphone:** PDM Microphone(MD-HRA371-H10-4N)
 
