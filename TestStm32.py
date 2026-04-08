@@ -207,8 +207,8 @@ class AudioRecorder:
         print(f"\n✅ Recording Complete. Exact Sample Rate: {fs} Hz")
         print("⚙️ Processing Bandpass Filter (20Hz - 20kHz)...")
 
-        # --- High-Pass (20Hz) & Low-Pass (8kHz) Filter ---
-        low_cutoff = 20.0
+        # --- High-Pass (100Hz) & Low-Pass (8kHz) Filter ---
+        low_cutoff = 100.0
         # Lowered from 20000 to 8000 to cut out high-frequency hiss
         high_cutoff = 8000.0 
         
