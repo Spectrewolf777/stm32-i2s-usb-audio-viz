@@ -207,23 +207,30 @@ class AudioRecorder:
         print(f"\n✅ Recording Complete. Exact Sample Rate: {fs} Hz")
         print("⚙️ Processing Bandpass Filter (20Hz - 20kHz)...")
 
-        # --- High-Pass (20Hz) & Low-Pass (20kHz) Filter ---
+        # --- High-Pass (20Hz) & Low-Pass (8kHz) Filter ---
         low_cutoff = 20.0
-        high_cutoff = 20000.0
+        # Lowered from 20000 to 8000 to cut out high-frequency hiss
+        high_cutoff = 8000.0 
+        
         if high_cutoff >= nyquist:
             high_cutoff = nyquist - 1.0
             
         b, a = signal.butter(4, [low_cutoff / nyquist, high_cutoff / nyquist], btype='band')
-        
-        # 4. Filter channels INDEPENDENTLY
-        # axis=0 ensures it filters down the columns, not across L/R
         filt_stereo = signal.filtfilt(b, a, raw_stereo, axis=0)
 
-        # 5. Normalize and Save using SciPy (Automatically handles 2 channels)
+        # --- Save Files (Without Auto-Normalizing the Noise Floor) ---
         for name, data in [('audio_raw.wav', raw_stereo), ('audio_bandpass.wav', filt_stereo)]:
-            # Normalize to 16-bit PCM
-            norm = ((data.astype(np.float32) / np.max(np.abs(data))) * 32767 * 0.95).astype(np.int16)
-            wavfile.write(name, fs, norm)
+            
+            # OPTION A: If the audio is too quiet, use a static multiplier (e.g., x5)
+            # Make sure it doesn't clip by clipping at the 16-bit max (32767)
+            gain_factor = 5.0 
+            amplified = np.clip(data.astype(np.float32) * gain_factor, -32768, 32767)
+            final_audio = amplified.astype(np.int16)
+
+            # OPTION B: If you just want the exact raw volume, uncomment the line below instead:
+            # final_audio = data.astype(np.int16)
+            
+            wavfile.write(name, fs, final_audio)
 
         print("\n--- Final Analysis ---")
         # Note: Your analyze_wav function is set up to just analyze the left channel: 
@@ -231,7 +238,7 @@ class AudioRecorder:
         analyze_wav('audio_raw.wav', 'wav_analysis_raw.png')
         analyze_wav('audio_bandpass.wav', 'wav_analysis_bandpass.png')
         print("✅ Process Complete.")
-        
+
     def run(self):
         sys.exit(self.app.exec_())
 
