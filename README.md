@@ -48,10 +48,12 @@ pip install numpy pyqtgraph pyserial PyQt5
    ```
 # Example
 ## Audio from stm32 i2s sample recieved through usb
-<img width="2400" height="3600" alt="wav_analysis_raw" src="https://github.com/user-attachments/assets/7542c6d6-4545-4697-b0a5-7ad859e1d01d" />
+<img width="2400" height="3600" alt="wav_analysis_raw" src="https://github.com/user-attachments/assets/5f059b67-1762-4471-bc17-77aa6ba4e92c" />
+
 
 ## Bandpass filter applied to it 
-<img width="2400" height="3600" alt="wav_analysis_bandpass" src="https://github.com/user-attachments/assets/ca43c15e-fdda-4db2-882f-64b942b36a41" />
+<img width="2400" height="3600" alt="wav_analysis_bandpass" src="https://github.com/user-attachments/assets/ee06de3d-0717-48f7-8811-a1a1b5dccc08" />
+
 
 ## Python script creates what circled below
 
