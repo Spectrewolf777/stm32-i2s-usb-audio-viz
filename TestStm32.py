@@ -188,10 +188,20 @@ class AudioRecorder:
             self.finish_and_save()
 
     def finish_and_save(self):
-        raw_final = np.concatenate(self.all_data)
+        # 1. Combine all chunks
+        raw_1d = np.concatenate(self.all_data)
         
-        # Calculate EXACT sample rate based on total data gathered
-        fs = int(len(raw_final) / RECORD_DURATION)
+        # Ensure we have an even number of samples before reshaping
+        if len(raw_1d) % 2 != 0:
+            raw_1d = raw_1d[:-1]
+
+        # 2. Reshape into Stereo (2 columns: Left and Right)
+        # raw_1d goes from [L, R, L, R] -> raw_stereo becomes [[L, R], [L, R]]
+        raw_stereo = raw_1d.reshape(-1, 2)
+        
+        # 3. Calculate EXACT sample rate
+        # We use len(raw_stereo) because 1 frame = 1 Left + 1 Right sample
+        fs = int(len(raw_stereo) / RECORD_DURATION)
         nyquist = fs / 2.0
         
         print(f"\n✅ Recording Complete. Exact Sample Rate: {fs} Hz")
@@ -200,32 +210,28 @@ class AudioRecorder:
         # --- High-Pass (20Hz) & Low-Pass (20kHz) Filter ---
         low_cutoff = 20.0
         high_cutoff = 20000.0
-        
-        # Safety check: if sample rate is low, limit the high cutoff to just below Nyquist
         if high_cutoff >= nyquist:
             high_cutoff = nyquist - 1.0
             
-        # Design a 4th-order Butterworth Bandpass filter
         b, a = signal.butter(4, [low_cutoff / nyquist, high_cutoff / nyquist], btype='band')
         
-        # filtfilt applies the filter forward and backward, resulting in ZERO phase distortion
-        filt_final = signal.filtfilt(b, a, raw_final)
+        # 4. Filter channels INDEPENDENTLY
+        # axis=0 ensures it filters down the columns, not across L/R
+        filt_stereo = signal.filtfilt(b, a, raw_stereo, axis=0)
 
-        # Save both waves
-        for name, data in [('audio_raw.wav', raw_final), ('audio_bandpass.wav', filt_final)]:
-            # Normalize to 16-bit PCM safely
+        # 5. Normalize and Save using SciPy (Automatically handles 2 channels)
+        for name, data in [('audio_raw.wav', raw_stereo), ('audio_bandpass.wav', filt_stereo)]:
+            # Normalize to 16-bit PCM
             norm = ((data.astype(np.float32) / np.max(np.abs(data))) * 32767 * 0.95).astype(np.int16)
-            with wave.open(name, 'w') as wf:
-                wf.setnchannels(1)
-                wf.setsampwidth(2)
-                wf.setframerate(fs)
-                wf.writeframes(norm.tobytes())
+            wavfile.write(name, fs, norm)
 
         print("\n--- Final Analysis ---")
+        # Note: Your analyze_wav function is set up to just analyze the left channel: 
+        # `if len(data.shape) > 1: data = data[:, 0]`
         analyze_wav('audio_raw.wav', 'wav_analysis_raw.png')
         analyze_wav('audio_bandpass.wav', 'wav_analysis_bandpass.png')
         print("✅ Process Complete.")
-
+        
     def run(self):
         sys.exit(self.app.exec_())
 
