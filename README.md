@@ -46,7 +46,9 @@ pip install numpy pyqtgraph pyserial PyQt5
    ```bash
    python TestStm32.py
    ```
-# Example
+# Example 
+> [!TIP]
+> **Note:** ExampleAudioAndGraph folder holds files and .wav 
 ## Audio from stm32 i2s sample recieved through usb
 <img width="2400" height="3600" alt="wav_analysis_raw" src="https://github.com/user-attachments/assets/5f059b67-1762-4471-bc17-77aa6ba4e92c" />
 
