@@ -208,9 +208,9 @@ class AudioRecorder:
         print("⚙️ Processing Bandpass Filter (20Hz - 20kHz)...")
 
         # --- High-Pass (100Hz) & Low-Pass (8kHz) Filter ---
-        low_cutoff = 100.0
+        low_cutoff = 50
         # Lowered from 20000 to 8000 to cut out high-frequency hiss
-        high_cutoff = 8000.0 
+        high_cutoff = 7500
         
         if high_cutoff >= nyquist:
             high_cutoff = nyquist - 1.0
